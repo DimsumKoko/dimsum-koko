@@ -141,6 +141,22 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 .foodVisual{overflow:hidden;position:relative}
 .foodVisual img{width:100%;height:100%;object-fit:cover;display:block}
 
+
+.packageModal{display:none;position:fixed;inset:0;background:#0008;z-index:100;align-items:center;justify-content:center;padding:18px}
+.packageModal.show{display:flex}
+.packageDialog{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;padding:24px;box-shadow:0 25px 70px #0005}
+.packageDialogTop{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:18px}
+.packageDialogTop h2{margin:5px 0;font-size:28px}
+.packageChoice{padding:12px 0;border-bottom:1px solid #eee}
+.packageChoice label{display:block;font-size:12px;font-weight:800;margin-bottom:7px;color:#555}
+.packageChoice select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;background:#fff;font:inherit}
+.packagePreview{margin:16px 0;padding:14px;border-radius:14px;background:var(--cream);font-size:13px;line-height:1.5}
+.packagePreview span{display:block;margin-top:5px;color:#555}
+@media(max-width:600px){
+ .packageDialog{padding:18px;border-radius:20px}
+ .packageDialogTop h2{font-size:22px}
+}
+
 </style>
 </head>
 <body>
@@ -181,7 +197,27 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 </main>
 
 <footer><div class="container footerGrid"><div><div class="brand" style="color:#fff"><img src="logo-dimsum-koko.png" alt="Logo Dimsum Koko"><span style="color:#fff">DIMSUM KOKO<small style="color:#bbb">AUTHENTIC DIMSUM EXPERIENCE</small></span></div><p class="muted">Premium Quality, Authentic Dimsum Experience.</p></div><div><b>Order</b><p class="muted">WhatsApp: 628111318892</p><p class="muted">Instagram: <a href="https://instagram.com/inidimsumkoko" target="_blank" rel="noopener">@inidimsumkoko</a></p></div></div></footer>
-<a class="wa" href="#" onclick="waDirect();return false">💬 WhatsApp</a>
+<a class="wa" href="https://wa.me/628111318892" target="_blank" rel="noopener">💬 WhatsApp</a>
+
+
+<div class="packageModal" id="packageModal">
+  <div class="packageDialog">
+    <div class="packageDialogTop">
+      <div>
+        <span class="eyebrow">CUSTOMIZE YOUR PACK</span>
+        <h2 id="packageModalTitle">Pilih Isi Paket</h2>
+        <p id="packageModalSub" class="muted">Pilih 1 dari 11 varian untuk setiap pack.</p>
+      </div>
+      <button class="close" type="button" onclick="closePackageModal()">×</button>
+    </div>
+    <div id="packageChoices"></div>
+    <div class="packagePreview">
+      <b>Isi paket:</b>
+      <span id="packageSummary">Belum ada varian yang dipilih.</span>
+    </div>
+    <button class="checkout" type="button" onclick="confirmPackage()">Tambahkan ke Keranjang</button>
+  </div>
+</div>
 
 <div class="overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()"><div class="drawer">
 <div class="drawerTop"><h2>Keranjang</h2><button class="close" onclick="closeCart()">×</button></div>
@@ -206,20 +242,77 @@ const products=[
 ["Mini Wonton Ayam","Mini wonton renyah dengan isian ayam berbumbu pilihan.","mini-wonton-ayam.jpg","GORENG"]
 ];
 const packages=[
-["Premium Mini Pack","6 pcs","Rp 34.900",34900],
-["Premium Medium Pack","12 pcs","Rp 69.900",69900],
-["Regular Premium Pack","30 pcs","Rp 150.000",150000],
-["Family Pack 2","2 × 30 pcs","Rp 289.900",289900],
-["Family Pack 3","3 × 30 pcs","Rp 425.000",425000],
-["Party Pack","5 × 30 pcs","Rp 699.000",699000]
+["Premium Mini Pack","6 pcs","Rp 34.900",34900,1],
+["Premium Medium Pack","12 pcs","Rp 69.900",69900,1],
+["Regular Premium Pack","30 pcs","Rp 150.000",150000,1],
+["Family Pack 2","2 × 30 pcs","Rp 289.900",289900,2],
+["Family Pack 3","3 × 30 pcs","Rp 425.000",425000,3],
+["Party Pack","5 × 30 pcs","Rp 699.000",699000,5]
 ];
 let cart=[];
 const rupiah=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
 function render(){
 document.getElementById("productGrid").innerHTML=products.map((p,i)=>`<article class="product"><div class="pic"><img src="${p[2]}" alt="${p[0]}" loading="lazy"></div><div class="productBody"><span class="methodText ${p[3]==="KUKUS"?"steam":"fried"}">${p[3]==="KUKUS"?"♨ KUKUS":"🔥 GORENG"}</span><h3>${p[0]}</h3><p>${p[1]}</p></div></article>`).join("");
-document.getElementById("packageGrid").innerHTML=packages.map((p,i)=>`<div class="package"><h3>${p[0]}</h3><p>${p[1]}</p><div class="price">${p[2]}</div><button onclick="addPackage(${i})">Pilih Paket</button></div>`).join("");
+document.getElementById("packageGrid").innerHTML=packages.map((p,i)=>`<div class="package"><h3>${p[0]}</h3><p>${p[1]}</p><div class="price">${p[2]}</div><button onclick="openPackageModal(${i})">Pilih Isi Paket</button></div>`).join("");
 updateCart();
 }
+
+let selectedPackageIndex=-1;
+let selectedPackageChoices=[];
+
+function variantLabel(i){
+  const p=products[i];
+  return `${p[0]} — ${p[3]}`;
+}
+function openPackageModal(i){
+  selectedPackageIndex=i;
+  const p=packages[i];
+  document.getElementById("packageModalTitle").textContent=p[0];
+  document.getElementById("packageModalSub").textContent=`${p[1]} • Pilih 1 dari 11 varian untuk setiap pack.`;
+  let defaults=Array(p[4]).fill(-1);
+  selectedPackageChoices=defaults;
+  document.getElementById("packageChoices").innerHTML=defaults.map((v,slot)=>`
+    <div class="packageChoice">
+      <label>Pack ${slot+1} — 30 pcs</label>
+      <select onchange="setPackageChoice(${slot},this.value)">
+        <option value="-1" ${v===-1?"selected":""}>Pilih varian</option>
+        ${products.map((x,j)=>`<option value="${j}" ${j===v?"selected":""}>${x[0]} — ${x[3]}</option>`).join("")}
+      </select>
+    </div>`).join("");
+  updatePackageSummary();
+  document.getElementById("packageModal").classList.add("show");
+}
+function closePackageModal(){document.getElementById("packageModal").classList.remove("show")}
+function setPackageChoice(slot,value){
+  selectedPackageChoices[slot]=Number(value);
+  updatePackageSummary();
+}
+function updatePackageSummary(){
+  const counts={};
+  selectedPackageChoices.forEach(i=>{if(i>=0)counts[i]=(counts[i]||0)+1});
+  const chosen=Object.entries(counts).map(([i,q])=>`${q} × ${products[i][0]} (${products[i][3]})`).join(" • ");
+  const remaining=selectedPackageChoices.filter(i=>i<0).length;
+  document.getElementById("packageSummary").textContent=chosen+(remaining?` • ${remaining} pilihan belum dipilih`:"");
+}
+function confirmPackage(){
+  if(selectedPackageIndex<0)return;
+  if(selectedPackageChoices.some(i=>i<0)){
+    alert("Silakan pilih semua varian paket terlebih dahulu.");
+    return;
+  }
+  const p=packages[selectedPackageIndex];
+  const counts={};
+  selectedPackageChoices.forEach(i=>{counts[i]=(counts[i]||0)+1});
+  const composition=Object.entries(counts).map(([i,q])=>`${q} × ${products[i][0]} (${products[i][3]})`).join(", ");
+  const key=`custom-${selectedPackageIndex}-${selectedPackageChoices.join("-")}`;
+  let x=cart.find(a=>a.key===key);
+  if(x)x.qty++;
+  else cart.push({key,name:`${p[0]} — ${composition}`,price:p[3],qty:1});
+  closePackageModal();
+  updateCart();
+  openCart();
+}
+
 function addPackage(i){const key="g"+i;let x=cart.find(a=>a.key===key);x?x.qty++:cart.push({key,name:packages[i][0]+" ("+packages[i][1]+")",price:packages[i][3],qty:1});updateCart()}
 function updateCart(){
 document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);
@@ -236,15 +329,11 @@ if(!name||!phone||!address)return alert("Lengkapi nama, WhatsApp, dan alamat.");
 let total=cart.reduce((s,x)=>s+x.price*x.qty,0);
 let lines=cart.map(x=>`- ${x.name} x${x.qty} = ${rupiah(x.price*x.qty)}`).join("\n");
 let msg=`Halo Dimsum Koko, saya mau order:\n\n${lines}\n\nTotal: ${rupiah(total)}\nNama: ${name}\nNo. WA: ${phone}\nAlamat: ${address}`;
-if(WA_NUMBER==="628111318892") return alert("Ganti dulu WA_NUMBER di file index.html dengan nomor WhatsApp bisnis Dimsum Koko.");
-window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
+if(false) return alert("Nomor WhatsApp belum diatur.");
+window.location.href="https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg);
 }
 function waDirect(){
-  if(WA_NUMBER==="628111318892"){
-    alert("Nomor WhatsApp belum diatur.");
-  }else{
-    window.open("https://wa.me/"+WA_NUMBER,"_blank");
-  }
+  window.location.href="https://wa.me/628111318892";
 }
 render();
 </script>
