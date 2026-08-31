@@ -28,6 +28,79 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 .overlay{display:none;position:fixed;inset:0;background:#0007;z-index:50}.drawer{position:absolute;right:0;top:0;height:100%;width:min(430px,94%);background:#fff;padding:25px;overflow:auto}.overlay.show{display:block}.drawerTop{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eee;border-radius:50%;width:35px;height:35px;cursor:pointer}.cartItem{display:flex;justify-content:space-between;gap:10px;padding:15px 0;border-bottom:1px solid #eee}.qty{display:flex;align-items:center;gap:8px}.qty button{border:0;border-radius:8px;padding:5px 9px;cursor:pointer}.checkout{width:100%;padding:14px;border:0;border-radius:12px;background:var(--red);color:#fff;font-weight:900;cursor:pointer}.form input,.form textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin:6px 0 10px;font:inherit}.form textarea{min-height:75px}
 @media(max-width:800px){nav{display:none}.heroGrid,.infoGrid{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}.products,.packages{grid-template-columns:1fr 1fr}.hero{padding-top:45px}.foodVisual{height:250px}.footerGrid{flex-direction:column}}
 @media(max-width:520px){.products,.packages{grid-template-columns:1fr}.badges{grid-template-columns:1fr 1fr}.secondary{margin-left:0;margin-top:8px}}
+
+/* Mobile-first refinements */
+@media (max-width: 600px){
+  .container{width:94%}
+  header{position:sticky}
+  .nav{height:58px}
+  .brand{font-size:16px;gap:6px}
+  .brand img{width:38px;height:38px;border-radius:9px}
+  .brand span{font-size:8px;letter-spacing:1px}
+  .brand span small{font-size:7px;letter-spacing:1px}
+  .cartBtn{padding:8px 11px;font-size:12px}
+
+  .hero{padding:24px 0 20px}
+  .heroGrid{display:block}
+  .heroCard{display:none}
+  .eyebrow{font-size:10px;letter-spacing:1.4px}
+  h1{font-size:34px;line-height:1;margin:8px 0}
+  .hero p{font-size:13px;line-height:1.45;margin:0 0 5px}
+  .cta{padding:10px 15px;font-size:12px;margin-top:7px}
+  .secondary{margin-left:5px}
+
+  section{padding:24px 0}
+  #promo-video{padding:12px 0 20px !important}
+  .sectionHead{margin-bottom:12px;display:block}
+  .sectionHead h2{font-size:22px}
+  .sectionHead p{font-size:12px;margin-top:4px}
+  .videoWrap{width:92%;border-radius:14px;box-shadow:0 7px 18px #0002}
+  .videoWrap video{height:145px;max-height:none;object-fit:cover}
+
+  /* compact benefits */
+  .badges{grid-template-columns:repeat(4,1fr);gap:6px}
+  .badge{padding:10px 4px;border-radius:12px;font-size:9px}
+  .badge b{font-size:9px;margin-top:3px}
+  .badge .muted{display:none}
+
+  /* 2-column product grid on phones */
+  .products{grid-template-columns:repeat(2,1fr);gap:9px}
+  .product{border-radius:14px}
+  .pic{height:115px;font-size:40px}
+  .productBody{padding:10px}
+  .productBody h3{font-size:14px;margin-bottom:4px}
+  .productBody p{font-size:10px;line-height:1.3;min-height:28px;margin:0 0 4px}
+  .price{font-size:15px}
+  .add{margin-top:7px;padding:8px 5px;border-radius:9px;font-size:10px}
+
+  .packages{grid-template-columns:repeat(2,1fr);gap:9px}
+  .package{border-radius:14px;padding:14px}
+  .package h3{font-size:14px}
+  .package p{font-size:11px}
+  .package .price{font-size:15px}
+  .package button{margin-top:9px;padding:8px 10px;font-size:10px}
+
+  .infoGrid{grid-template-columns:1fr;gap:10px}
+  .infoBox{padding:16px;border-radius:14px;font-size:12px}
+  .infoBox h3{font-size:17px}
+  .faq details{padding:13px;border-radius:12px}
+  .faq summary{font-size:13px}
+  .faq p{font-size:12px;line-height:1.4}
+  footer{padding:28px 0}
+  .footerGrid{gap:15px}
+  .wa{right:12px;bottom:12px;padding:11px 14px;font-size:12px}
+}
+
+/* Extra-small phones */
+@media (max-width:380px){
+  .brand span{display:none}
+  h1{font-size:30px}
+  .hero p{font-size:12px}
+  .videoWrap video{height:125px}
+  .pic{height:100px}
+  .productBody{padding:8px}
+}
+
 </style>
 </head>
 <body>
@@ -43,7 +116,11 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 <div class="heroCard"><div class="foodVisual">🥟🥟<br>🥟🥟</div><small>✨ Premium Quality • Halal • Frozen Fresh</small></div>
 </div></section>
 
-<section id="promo-video" style="padding-top:28px;padding-bottom:34px"><div class="container"><div class="sectionHead" style="margin-bottom:16px"><div><h2>Kenalan dengan Dimsum Koko</h2><p>Lihat cerita dan kelezatan Dimsum Koko dalam video singkat.</p></div></div><div class="videoWrap"><video controls playsinline muted preload="metadata" poster="logo-dimsum-koko.png"><source src="promo-dimsum-koko.mp4" type="video/mp4">Browser Anda tidak mendukung video.</video></div></div></section>
+<section id="promo-video" style="padding-top:28px;padding-bottom:34px"><div class="container"><div class="sectionHead" style="margin-bottom:16px"><div><h2>Kenalan dengan Dimsum Koko</h2><p>Kenali Koko & produk favoritnya.</p></div></div><div class="videoWrap"><video controls playsinline muted preload="metadata" poster="logo-dimsum-koko.png"><source src="promo-dimsum-koko.mp4" type="video/mp4">Browser Anda tidak mendukung video.</video></div></div></section>
+
+
+
+<section id="produk"><div class="container"><div class="sectionHead"><div><h2>Favorite Dimsum</h2><p>Pilih favorit Koko untuk stok di rumah.</p></div></div><div class="products" id="productGrid"></div></div></section>
 
 <section><div class="container"><div class="badges">
 <div class="badge">🍗<b>100% Daging Ayam</b><span class="muted">Bahan pilihan</span></div>
@@ -51,8 +128,6 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 <div class="badge">☪️<b>Halal</b><span class="muted">Pilihan keluarga</span></div>
 <div class="badge">❄️<b>Frozen Fresh</b><span class="muted">Jaga kualitas</span></div>
 </div></div></section>
-
-<section id="produk"><div class="container"><div class="sectionHead"><div><h2>Favorite Dimsum</h2><p>Pilih favorit Koko untuk stok di rumah.</p></div></div><div class="products" id="productGrid"></div></div></section>
 
 <section id="paket" style="background:#f4eadf"><div class="container"><div class="sectionHead"><div><h2>Paket Hemat</h2><p>Lebih banyak, lebih seru untuk keluarga & acara.</p></div></div><div class="packages" id="packageGrid"></div></div></section>
 
