@@ -126,6 +126,21 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
   .methodBadge{left:6px;top:6px;padding:4px 6px;font-size:8px}
 }
 
+
+.product .pic{height:210px;overflow:hidden;background:#f4e8db}
+.product .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.methodText{display:inline-block;margin-top:10px;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.4px}
+.methodText.steam{background:#e8f5e9;color:#27833a}
+.methodText.fried{background:#fff0e4;color:#b63c1d}
+@media(max-width:600px){
+  .product .pic{height:125px}
+  .methodText{font-size:8px;margin-top:7px;padding:3px 6px}
+}
+
+
+.foodVisual{overflow:hidden;position:relative}
+.foodVisual img{width:100%;height:100%;object-fit:cover;display:block}
+
 </style>
 </head>
 <body>
@@ -138,7 +153,7 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 <main>
 <section class="hero"><div class="container heroGrid">
 <div><div class="eyebrow">Premium Frozen Dimsum</div><h1>Dimsum enak,<br>kualitas premium.</h1><p>100% daging ayam & bahan pilihan. Tanpa pengawet, halal, dan dibuat untuk menghadirkan <b>Authentic Dimsum Experience</b> di rumah.</p><a class="cta" href="#produk">Lihat Produk</a><a class="cta secondary" href="#paket">Pilih Paket</a></div>
-<div class="heroCard"><div class="foodVisual">🥟🥟<br>🥟🥟</div><small>✨ Premium Quality • Halal • Frozen Fresh</small></div>
+<div class="heroCard"><div class="foodVisual"><img src="hero-dimsum-koko.jpg" alt="Dimsum Koko premium dimsum" loading="eager"></div><small>✨ Premium Quality • Halal • Frozen Fresh</small></div>
 </div></section>
 
 <section id="promo-video" style="padding-top:28px;padding-bottom:34px"><div class="container"><div class="sectionHead" style="margin-bottom:16px"><div><h2>Kenalan dengan Dimsum Koko</h2><p>Kenali Koko & produk favoritnya.</p></div></div><div class="videoWrap"><video controls playsinline muted preload="metadata" poster="logo-dimsum-koko.png"><source src="promo-dimsum-koko.mp4" type="video/mp4">Browser Anda tidak mendukung video.</video></div></div></section>
@@ -201,7 +216,7 @@ const packages=[
 let cart=[];
 const rupiah=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
 function render(){
-document.getElementById("productGrid").innerHTML=products.map((p,i)=>`<article class="product"><div class="pic"><span class="methodBadge ${p[3]==="KUKUS"?"steam":"fried"}">${p[3]==="KUKUS"?"♨ KUKUS":"🔥 GORENG"}</span><img src="${p[2]}" alt="${p[0]}" loading="lazy"></div><div class="productBody"><h3>${p[0]}</h3><p>${p[1]}</p></div></article>`).join("");
+document.getElementById("productGrid").innerHTML=products.map((p,i)=>`<article class="product"><div class="pic"><img src="${p[2]}" alt="${p[0]}" loading="lazy"></div><div class="productBody"><span class="methodText ${p[3]==="KUKUS"?"steam":"fried"}">${p[3]==="KUKUS"?"♨ KUKUS":"🔥 GORENG"}</span><h3>${p[0]}</h3><p>${p[1]}</p></div></article>`).join("");
 document.getElementById("packageGrid").innerHTML=packages.map((p,i)=>`<div class="package"><h3>${p[0]}</h3><p>${p[1]}</p><div class="price">${p[2]}</div><button onclick="addPackage(${i})">Pilih Paket</button></div>`).join("");
 updateCart();
 }
@@ -225,7 +240,7 @@ if(WA_NUMBER==="628111318892") return alert("Ganti dulu WA_NUMBER di file index.
 window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
 }
 function waDirect(){
-  if(WA_NUMBER==="GANTI_NOMOR_WHATSAPP"){
+  if(WA_NUMBER==="628111318892"){
     alert("Nomor WhatsApp belum diatur.");
   }else{
     window.open("https://wa.me/"+WA_NUMBER,"_blank");
