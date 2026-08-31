@@ -10,15 +10,15 @@
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--dark);background:var(--cream)}
 a{text-decoration:none;color:inherit}.container{width:min(1120px,92%);margin:auto}
 header{position:sticky;top:0;z-index:20;background:#fffdf9ee;backdrop-filter:blur(10px);border-bottom:1px solid #eadfD2}
-.nav{height:72px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;font-size:22px;color:var(--red)}.brand span{display:block;font-size:10px;letter-spacing:2px;color:#555}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;font-size:22px;color:var(--red);display:flex;align-items:center;gap:10px}.brand img{width:48px;height:48px;object-fit:contain;border-radius:12px}.brand span{display:block;font-size:10px;letter-spacing:2px;color:#555}.brand span small{display:block;font-size:10px;letter-spacing:2px;color:#555;margin-top:2px}
 nav{display:flex;gap:24px;font-size:14px;font-weight:700}nav a:hover{color:var(--red)}
 .cartBtn{border:0;background:var(--red);color:#fff;padding:11px 16px;border-radius:999px;font-weight:800;cursor:pointer}
-.hero{padding:76px 0 55px;background:radial-gradient(circle at 80% 30%,#ffdcb8 0,#fff8ef 38%,#fff8ef 70%)}
+.videoWrap{width:min(680px,100%);margin:0 auto;background:#111;border-radius:20px;overflow:hidden;box-shadow:0 12px 30px #0002}.videoWrap video{display:block;width:100%;max-height:280px;object-fit:cover}.hero{padding:42px 0 30px;background:radial-gradient(circle at 80% 30%,#ffdcb8 0,#fff8ef 38%,#fff8ef 70%)}
 .heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center}.eyebrow{color:var(--red);font-weight:900;letter-spacing:2px;text-transform:uppercase;font-size:12px}
 h1{font-size:clamp(42px,6vw,72px);line-height:.98;margin:14px 0}.hero p{font-size:18px;line-height:1.6;color:#555;max-width:600px}
 .cta{display:inline-block;background:var(--red);color:#fff;padding:15px 23px;border-radius:999px;font-weight:900;margin-top:10px}.secondary{background:#fff;color:var(--red);border:1px solid #e7c8c8;margin-left:8px}
 .heroCard{background:#fff;border-radius:32px;padding:25px;box-shadow:0 20px 50px #7d3b2418;transform:rotate(2deg)}.foodVisual{height:330px;border-radius:24px;background:linear-gradient(135deg,#f7d6b4,#c98755);display:grid;place-items:center;font-size:100px}.heroCard small{display:block;color:#777;margin-top:15px}
-section{padding:70px 0}.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.sectionHead h2{margin:0;font-size:34px}.sectionHead p{margin:0;color:var(--muted)}
+section{padding:42px 0}.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.sectionHead h2{margin:0;font-size:34px}.sectionHead p{margin:0;color:var(--muted)}
 .badges{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.badge{background:#fff;padding:23px;border-radius:20px;text-align:center;border:1px solid #eee1d4}.badge b{display:block;margin-top:8px}
 .products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.product{background:#fff;border-radius:22px;overflow:hidden;border:1px solid #eee1d4;box-shadow:0 8px 25px #00000008}.pic{height:220px;background:linear-gradient(135deg,#f1c39c,#f9e6d0);display:grid;place-items:center;font-size:68px}.productBody{padding:18px}.productBody h3{margin:0 0 7px}.productBody p{color:#777;font-size:14px;min-height:38px}.price{font-weight:900;color:var(--red);font-size:20px}.add{width:100%;margin-top:13px;padding:12px;border:0;border-radius:12px;background:var(--dark);color:#fff;font-weight:800;cursor:pointer}.add:hover{background:var(--red)}
 .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.package{background:var(--dark);color:#fff;border-radius:22px;padding:25px}.package h3{margin-top:0}.package .price{color:#ffd38b}.package button{margin-top:18px;padding:11px 15px;border:0;border-radius:999px;background:#fff;color:var(--dark);font-weight:800;cursor:pointer}
@@ -32,7 +32,7 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 </head>
 <body>
 <header><div class="container nav">
-<a class="brand" href="#">DIMSUM KOKO<span>AUTHENTIC DIMSUM EXPERIENCE</span></a>
+<a class="brand" href="#"><img src="logo-dimsum-koko.png" alt="Logo Dimsum Koko"><span>DIMSUM KOKO<small>AUTHENTIC DIMSUM EXPERIENCE</small></span></a>
 <nav><a href="#produk">Produk</a><a href="#paket">Paket</a><a href="#about">Tentang</a><a href="#faq">FAQ</a></nav>
 <button class="cartBtn" onclick="openCart()">🛒 Keranjang (<span id="cartCount">0</span>)</button>
 </div></header>
@@ -42,6 +42,8 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 <div><div class="eyebrow">Premium Frozen Dimsum</div><h1>Dimsum enak,<br>kualitas premium.</h1><p>100% daging ayam & bahan pilihan. Tanpa pengawet, halal, dan dibuat untuk menghadirkan <b>Authentic Dimsum Experience</b> di rumah.</p><a class="cta" href="#produk">Lihat Produk</a><a class="cta secondary" href="#paket">Pilih Paket</a></div>
 <div class="heroCard"><div class="foodVisual">🥟🥟<br>🥟🥟</div><small>✨ Premium Quality • Halal • Frozen Fresh</small></div>
 </div></section>
+
+<section id="promo-video" style="padding-top:28px;padding-bottom:34px"><div class="container"><div class="sectionHead" style="margin-bottom:16px"><div><h2>Kenalan dengan Dimsum Koko</h2><p>Lihat cerita dan kelezatan Dimsum Koko dalam video singkat.</p></div></div><div class="videoWrap"><video controls playsinline muted preload="metadata" poster="logo-dimsum-koko.png"><source src="promo-dimsum-koko.mp4" type="video/mp4">Browser Anda tidak mendukung video.</video></div></div></section>
 
 <section><div class="container"><div class="badges">
 <div class="badge">🍗<b>100% Daging Ayam</b><span class="muted">Bahan pilihan</span></div>
@@ -63,7 +65,7 @@ footer{background:var(--dark);color:#fff;padding:45px 0}.footerGrid{display:flex
 </div></section>
 </main>
 
-<footer><div class="container footerGrid"><div><div class="brand" style="color:#fff">DIMSUM KOKO</div><p class="muted">Premium Quality, Authentic Dimsum Experience.</p></div><div><b>Order</b><p class="muted">WhatsApp: 0811-1318-892 </p><p class="muted">Instagram: @inidimsumkoko</p></div></div></footer>
+<footer><div class="container footerGrid"><div><div class="brand" style="color:#fff"><img src="logo-dimsum-koko.png" alt="Logo Dimsum Koko"><span style="color:#fff">DIMSUM KOKO<small style="color:#bbb">AUTHENTIC DIMSUM EXPERIENCE</small></span></div><p class="muted">Premium Quality, Authentic Dimsum Experience.</p></div><div><b>Order</b><p class="muted">WhatsApp: 628111318892</p><p class="muted">Instagram: @dimsumkoko</p></div></div></footer>
 <a class="wa" href="#" onclick="waDirect();return false">💬 WhatsApp</a>
 
 <div class="overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()"><div class="drawer">
@@ -115,10 +117,10 @@ if(!name||!phone||!address)return alert("Lengkapi nama, WhatsApp, dan alamat.");
 let total=cart.reduce((s,x)=>s+x.price*x.qty,0);
 let lines=cart.map(x=>`- ${x.name} x${x.qty} = ${rupiah(x.price*x.qty)}`).join("\n");
 let msg=`Halo Dimsum Koko, saya mau order:\n\n${lines}\n\nTotal: ${rupiah(total)}\nNama: ${name}\nNo. WA: ${phone}\nAlamat: ${address}`;
-if(WA_NUMBER==="GANTI_NOMOR_WHATSAPP") return alert("Ganti dulu WA_NUMBER di file index.html dengan nomor WhatsApp bisnis Dimsum Koko.");
+if(WA_NUMBER==="628111318892") return alert("Ganti dulu WA_NUMBER di file index.html dengan nomor WhatsApp bisnis Dimsum Koko.");
 window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
 }
-function waDirect(){if(WA_NUMBER==="GANTI_NOMOR_WHATSAPP")alert("Ganti dulu WA_NUMBER di file index.html dengan nomor WhatsApp bisnis Dimsum Koko.");else window.open("https://wa.me/"+WA_NUMBER,"_blank")}
+function waDirect(){if(WA_NUMBER==="628111318892")alert("Ganti dulu WA_NUMBER di file index.html dengan nomor WhatsApp bisnis Dimsum Koko.");else window.open("https://wa.me/"+WA_NUMBER,"_blank")}
 render();
 </script>
 </body></html>
